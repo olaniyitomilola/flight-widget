@@ -4,7 +4,8 @@
   "description": "An Ania Kubow web app project with spome touchg of mine",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "keywords": [
     "NodeJs",
@@ -13,6 +14,9 @@
   "author": "olaniyi tomilola",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "nodemon": "^2.0.20"
   }
