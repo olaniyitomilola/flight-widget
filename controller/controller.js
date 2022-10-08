@@ -9,8 +9,10 @@ const options = {
       'X-RapidAPI-Host': 'toronto-pearson-airport.p.rapidapi.com'
     }
   };
+const flightsDepart = axios.get('https://toronto-pearson-airport.p.rapidapi.com/departures', options);
+
 const flights = axios.get('https://toronto-pearson-airport.p.rapidapi.com/arrivals', options);
-const getAllTravels =  async (req,res)=>{
+const getAllArrivals =  async (req,res)=>{
     try {
         const response = await flights;
         res.status(200).json (response.data)
@@ -19,18 +21,29 @@ const getAllTravels =  async (req,res)=>{
         console.error(error.response.data)
     }     
 }
-const getSingleFlight = async(req,res)=>{
-    const {flightNumber,airline,limit} = req.query;
+
+
+const getAllDepartures =  async (req,res)=>{
+    try {
+        const response = await flightsDepart;
+        res.status(200).json (response.data)
+        
+    } catch (error) {
+        console.error(error.response.data)
+    }     
+}
+
+const getSingleArrival = async(req,res)=>{
+    const {flightNumber,airline,terminal} = req.query;
 
     try {
         let response = await flights;
         let newResponse = [...response.data]
     
-        console.log(typeof(newResponse))
     
         if(flightNumber){
             newResponse = newResponse.filter((flights)=>{
-                return flights.flightNumber[0].toLowerCase() === flightNumber.toLowerCase().trim();
+                return flights.flightNumber.find((flight)=> flight.toLowerCase() === flightNumber.toLowerCase().trim());
             })
             if(newResponse.length<1){
                 return res.status(404).json({
@@ -40,11 +53,21 @@ const getSingleFlight = async(req,res)=>{
         }
         if(airline){
             newResponse = newResponse.filter((flights)=>{
-                return flights.airline[0].toLowerCase() === airline.toLowerCase().trim();
+                return flights.airline.find((air)=> air.toLowerCase() === airline.toLowerCase().trim());
             })
             if(newResponse.length<1){
                 return res.status(404).json({
                     msg: `flight with the Airline: ${airline} does not exist`
+                })
+            }
+        }
+        if(terminal){
+            newResponse = newResponse.filter((flights)=>{
+                return flights.terminal === terminal;
+            })
+            if(newResponse.length<1){
+                return res.status(404).json({
+                    msg: `flight with the Airline: ${terminal} does not exist`
                 })
             }
         }
@@ -58,4 +81,52 @@ const getSingleFlight = async(req,res)=>{
 
 }
 
-module.exports = {getAllTravels,getSingleFlight};
+const getSingleDeparture = async(req,res)=>{
+    const {flightNumber,airline,terminal} = req.query;
+
+    try {
+        let response = await flightsDepart;
+        let newResponse = [...response.data]
+    
+    
+        if(flightNumber){
+            newResponse = newResponse.filter((flights)=>{
+                return flights.flightNumber.find((flight)=> flight.toLowerCase() === flightNumber.toLowerCase().trim());
+            })
+            if(newResponse.length<1){
+                return res.status(404).json({
+                    msg: `flight with the Flight Number: ${flightNumber} does not exist`
+                })
+            }
+        }
+        if(airline){
+            newResponse = newResponse.filter((flights)=>{
+                return flights.airline.find((air)=> air.toLowerCase() === airline.toLowerCase().trim());
+            })
+            if(newResponse.length<1){
+                return res.status(404).json({
+                    msg: `flight with the Airline: ${airline} does not exist at the moment`
+                })
+            }
+        }
+        if(terminal){
+            newResponse = newResponse.filter((flights)=>{
+                return flights.terminal === terminal;
+            })
+            if(newResponse.length<1){
+                return res.status(404).json({
+                    msg: `There is no flight departing from Terminal ${terminal} at this moment`
+                })
+            }
+        }
+        res.status(200).json(newResponse)
+    } catch (error) {
+        console.error(error)
+    }
+    
+   
+
+
+}
+
+module.exports = {getAllArrivals,getSingleArrival,getAllDepartures,getSingleDeparture};

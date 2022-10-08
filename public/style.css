@@ -1,32 +1,259 @@
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;694;900&display=swap");
 * {
-  font-family: "Ubuntu Condensed", sans-serif;
+  font-family: "Orbitron", sans-serif;
   box-sizing: border-box;
-  font-size: 35px;
-  color: rgb(240, 240, 240);
+  font-size: 20px;
 }
 
 body {
   display: flex;
   justify-content: center;
   height: 100vh;
-  align-items: center;
   background-color: rgb(3, 8, 14);
 }
-
-h1 {
-  padding: 10px;
+body main {
+  width: 100%;
+  transition: all 300ms;
+}
+body main.arriveHeading {
+  color: green;
+}
+body main.departHeading {
+  color: red;
 }
 
 .departure {
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   padding: 10px;
-  background-color: rgb(6, 6, 6);
+}
+.departure #heading {
+  display: flex;
+  position: relative;
+  width: clamp(20rem, 80%, 60rem);
+  height: 3rem;
+  font-size: 1.5rem;
+}
+.departure #heading #departHeading {
+  position: absolute;
+  left: 35%;
+  transform: translate(-50%);
+  opacity: 0.1;
+  transition: all 300ms;
+}
+.departure #heading #departHeading.active {
+  opacity: 1;
+  left: 50%;
+}
+.departure #heading #arriveHeading {
+  position: absolute;
+  transform: translate(-50%);
+  opacity: 0.1;
+  transition: all 300ms;
+  left: 65%;
+}
+.departure #heading #arriveHeading.active {
+  opacity: 1;
+  left: 50%;
+}
+.departure #heading #arriveHeading.hide {
+  display: none;
+}
+.departure #heading #departHeading.hide {
+  display: none;
+}
+.departure #heading .queryForm.active {
+  animation: goUp 500ms linear forwards;
+  display: block;
+}
+.departure #heading .queryForm {
+  display: none;
+  position: absolute;
+  transform: translateY(50%);
+  background-color: transparent;
+  transition: all 1s;
+}
+.departure #heading .queryForm select {
+  font-size: 0.8rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.departure #heading .queryForm select.departHeading {
+  color: red;
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red;
+}
+.departure #heading .queryForm select.arriveHeading {
+  color: green;
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green;
+}
+.departure #heading .queryForm input {
+  font-size: 0.8rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  transition: all 300ms;
+}
+.departure #heading .queryForm #query {
+  padding-left: 0.5rem;
+}
+.departure #heading .queryForm input.departHeading {
+  color: red;
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red;
+}
+.departure #heading .queryForm input.arriveHeading {
+  color: green;
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green;
+}
+.departure #heading #queryToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  position: absolute;
+  transform: translateY(50%);
+  right: 0%;
+  padding: 0.2rem;
+  transition: background 300ms;
+}
+.departure #heading #queryToggle ion-icon {
+  font-size: 1rem;
+  transform: all 300ms;
+}
+.departure #heading #queryToggle.arriveHeading {
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green;
+  background: green;
+}
+.departure #heading #queryToggle.departHeading {
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red;
+  background: red;
 }
 .departure table {
-  width: 100%;
-  background-color: rgb(46, 46, 46);
+  width: clamp(20rem, 80%, 60rem);
   text-align: left;
+  transition: all 300ms;
+}
+.departure table th {
+  font-size: 0.8rem;
+  padding: 1rem 0.5rem;
+}
+.departure table tbody tr {
+  border-top: 2px solid white;
+}
+.departure table tbody tr div {
+  font-size: 0.7rem;
+}
+.departure table tbody td {
+  font-size: 0.7rem;
+  padding: 1rem 0.5rem;
+}
+.departure table #destination {
+  width: 30%;
+}
+.departure table #airline {
+  width: 25%;
+}
+.departure table #remark {
+  text-align: right;
+}
+.departure table #gate {
+  text-align: center;
+}
+.departure table.arriveHeading {
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green;
+}
+.departure table.departHeading {
+  box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red, 0 0 2px red;
+}
+
+@media screen and (max-width: 800px) {
+  * {
+    font-size: 15px;
+  }
+  body {
+    margin: 0;
+    padding: 0.5rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  * {
+    font-size: 10px;
+  }
+  body {
+    margin: 0;
+    padding: 0.5rem;
+  }
+  table {
+    width: clamp(20rem, 90%, 60rem);
+    text-align: center;
+    transition: all 300ms;
+  }
+}
+@media screen and (max-width: 420px) {
+  #heading {
+    font-size: 1rem;
+  }
+  #query {
+    width: 40%;
+  }
+}
+@media screen and (max-width: 360px) {
+  #flight {
+    display: none;
+  }
+  body {
+    margin: 0;
+    padding: 0.5rem;
+  }
+}
+@keyframes goUp {
+  0% {
+    right: 20%;
+  }
+  25% {
+    right: 15%;
+  }
+  50% {
+    right: 12%;
+  }
+  100% {
+    right: 2%;
+  }
+}
+@media screen and (min-width: 800px) {
+  @keyframes goUp {
+    0% {
+      right: 40%;
+    }
+    25% {
+      right: 15%;
+    }
+    50% {
+      right: 12%;
+    }
+    100% {
+      right: 7%;
+    }
+  }
+}
+@media screen and (min-width: 650px) {
+  @keyframes goUp {
+    0% {
+      right: 30%;
+    }
+    25% {
+      right: 15%;
+    }
+    50% {
+      right: 12%;
+    }
+    100% {
+      right: 7%;
+    }
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

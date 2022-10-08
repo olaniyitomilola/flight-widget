@@ -1,9 +1,9 @@
 const express =  require('express');
 const router = express.Router();
-const {getAllTravels,getSingleFlight} = require('../controller/controller')
+const {getAllArrivals,getSingleArrival,getAllDepartures,getSingleDeparture} = require('../controller/controller')
 
-router.route('/').get(getAllTravels);
-router.route('/search?').get(getSingleFlight);
-
-
+router.route('/').get(getAllArrivals);
+router.route('/search?').get(getSingleArrival)
+router.route('/departure/').get(getAllDepartures);
+router.route('/departure/search?').get(getSingleDeparture)
 module.exports = router;

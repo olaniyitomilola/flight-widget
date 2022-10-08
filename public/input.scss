@@ -1,32 +1,317 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;694;900&display=swap');
+@mixin shadow($color ) {
+//     text-shadow:
+//     0px  0px 1px #fff,
+//     0px  0px 1px #fff,
+//     0px  0px 1px #fff,
+    
+//     0px  0px 1px $color,
+//     0px  0px 1px $color,
+//     0px  0px 1px $color,
+//     0px  0px 1px $color,
+//     0px  0px 1px $color;
+// 
+color: $color;
+}
+
+@mixin boxshadow($color ) {
+    box-shadow:
+    0 0 2px #fff,
+    0 0 2px #fff,
+    0 0 2px #fff,
+    0 0 2px $color,
+    0 0 2px $color,
+    0 0 2px $color,
+    0 0 2px $color,
+    0 0 2px $color;
+}
+
 
 $color : rgb(240,240,240);
 $background: rgb(3,8,14);
 
 *{
-    font-family: 'Ubuntu Condensed', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     box-sizing: border-box;
-    font-size: 35px;
-    color: $color;
+    font-size: 20px;
 }
 body{
     display: flex;
     justify-content: center;
     height:100vh;
-    align-items: center;
     background-color: $background;
+
+    main{
+        width: 100%;
+        transition: all 300ms;
+    }
+    main.arriveHeading{
+        @include shadow($color: green);
+
+    }
+    main.departHeading{
+        @include shadow($color: red);
+
+    }
+  
     
 }
-h1{
-    padding: 10px;
-}
+
 .departure{
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     padding: 10px;
-    background-color: rgb(6,6,6);
-    table{
-        width: 100%;
-        background-color: rgb(46,46,46);
-        text-align: left;
+
+    #heading{
+        display: flex;
+        position: relative;
+        width: clamp(20rem,80%,60rem);
+        height: 3rem;
+        font-size: 1.5rem;
+       
+        #departHeading{
+            position: absolute;
+            left: 35%;
+            transform: translate(-50%);
+            opacity: 0.1;
+            transition: all 300ms;
+            
+         
+        }
+        #departHeading.active{
+            opacity: 1;
+            left: 50%;
+        }
+        #arriveHeading{
+            position: absolute;
+            transform: translate(-50%);
+            opacity: 0.1;
+            transition: all 300ms;
+            left: 65%
+        }
+        #arriveHeading.active{
+            opacity: 1;
+            left: 50%;
+        }
+        #arriveHeading.hide{
+            display: none;
+        }
+        #departHeading.hide{
+            display: none;
+        }
+        .queryForm.active{
+            animation: goUp 500ms linear forwards;
+            display: block;
+
+
+        }
+        .queryForm{
+            display: none;
+            position: absolute;
+            transform: translateY(50%);
+            background-color: transparent;
+            transition: all 1s;
+            select{
+                font-size: 0.8rem;
+                background-color: transparent;
+                border: none;
+                outline: none;
+            }
+            select.departHeading{
+                @include shadow($color: red);
+                @include boxshadow($color: red)
+            }
+            select.arriveHeading{
+                @include shadow($color: green);
+                @include boxshadow($color: green)
+            }
+
+            input{
+                font-size: 0.8rem;
+                background-color: transparent;
+                border: none;
+                outline: none;
+                transition: all 300ms;
+
+            }
+            #query{
+                padding-left: 0.5rem;;
+            }
+            input.departHeading{
+                @include shadow($color: red);
+                @include boxshadow($color: red)
+            }
+            input.arriveHeading{
+                @include shadow($color: green);
+                @include boxshadow($color: green)
+            }
+           
+        }
+        #queryToggle.active{
+            
+        }
+        #queryToggle{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #fff;
+            position: absolute;
+            transform: translateY(50%);
+            right: 0%;
+            padding: 0.2rem;
+            transition: background 300ms;
+            ion-icon{
+                font-size: 1rem;
+                transform: all 300ms;
+
+            }
+
+        }
+        #queryToggle.arriveHeading{
+            @include boxshadow($color: green);
+            background: green;
+
+
+        }
+        #queryToggle.departHeading{
+            @include boxshadow($color: red);
+            background: red;
+
+
+        }
+      
     }
+
+    table{
+        width: clamp(20rem,80%,60rem);
+        text-align: left;
+        transition: all 300ms;
+        th{
+            font-size: 0.8rem;
+            padding: 1rem 0.5rem;
+        }
+        tbody{
+            tr{
+                div{
+                    font-size: 0.7rem;
+                }
+                border-top: 2px solid white;
+
+            }
+            td{
+                font-size: 0.7rem;
+                padding: 1rem 0.5rem;
+            }
+        }
+        #destination{
+            width: 30%;
+        }
+        #airline{
+            width: 25%;
+        }
+        #remark{
+            text-align: right;
+        }
+        #gate{
+            text-align: center;
+        }
+ 
+    }
+    table.arriveHeading{
+        @include boxshadow($color: green)
+
+    }
+    table.departHeading{
+        @include boxshadow($color: red)
+
+    }
+}
+@media screen and (max-width:800px){
+    *{
+        font-size: 15px;
+    }
+    body{
+        margin: 0;
+        padding: 0.5rem
+    }
+
+}
+@media screen and (max-width:500px){
+    *{
+        font-size: 10px;
+    }
+    body{
+        margin: 0;
+        padding: 0.5rem
+    }
+    table{
+        width: clamp(20rem,90%,60rem);
+        text-align: center;
+        transition: all 300ms;
+    }
+
+}
+@media screen and (max-width:420px){
+    #heading{
+        font-size: 1rem ;
+    }
+    #query{
+        width: 40%;
+    }
+   
+}
+@media screen and (max-width:360px){
+    #flight{
+        display: none;
+    }
+    body{
+        margin: 0;
+        padding: 0.5rem
+    }
+
+}
+@keyframes goUp {
+    0%{
+        right: 20%;
+    }
+    25%{right:15%}
+    50%{right:12%}
+    100%{
+        right: 2%
+    }
+
+    
+}
+@media screen and (min-width:800px){
+    @keyframes goUp {
+        0%{
+            right: 40%;
+        }
+        25%{right:15%}
+        50%{right:12%}
+        100%{
+            right: 7%
+        }
+    
+        
+    }
+
+}
+@media screen and (min-width:650px){
+    @keyframes goUp {
+        0%{
+            right: 30%;
+        }
+        25%{right:15%}
+        50%{right:12%}
+        100%{
+            right: 7%
+        }
+    
+        
+    }
+
 }
