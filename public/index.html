@@ -14,14 +14,14 @@
                 <span><h1 id="departHeading" class="active">Departures</h1></span>
                 <span><h1 id="arriveHeading">Arrivals</h1></span>
                 <form class="queryForm" action="" method="get">
-                    <select class="departHeading" name="" id="">
+                    <select class="departHeading" name="" id="queryselection">
                         <option value="flightNumber">Flight</option>
                         <option value="airline">Airline</option>
-                        <option value="gate">Gate</option>
+                        <option class="g_and_t" value="gate">Gate</option>
                         <option value="destination">Destination</option>
                     </select>
                     <input class="departHeading" type="text" name="query" id="query">
-                    <input class="departHeading" type="button" value="Search">
+                    <input id="searchbtn" class="departHeading" type="button" value="Search">
                 </form>
                 <div id="queryToggle" class="departHeading">
                     <ion-icon name="search"></ion-icon>

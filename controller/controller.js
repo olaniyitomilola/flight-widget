@@ -34,7 +34,7 @@ const getAllDepartures =  async (req,res)=>{
 }
 
 const getSingleArrival = async(req,res)=>{
-    const {flightNumber,airline,terminal} = req.query;
+    const {flightNumber,airline,terminal,destination} = req.query;
 
     try {
         let response = await flights;
@@ -53,7 +53,7 @@ const getSingleArrival = async(req,res)=>{
         }
         if(airline){
             newResponse = newResponse.filter((flights)=>{
-                return flights.airline.find((air)=> air.toLowerCase() === airline.toLowerCase().trim());
+                return flights.airline.find((air)=> air.toLowerCase().includes(airline.toLowerCase().trim()));
             })
             if(newResponse.length<1){
                 return res.status(404).json({
@@ -71,6 +71,16 @@ const getSingleArrival = async(req,res)=>{
                 })
             }
         }
+        if(destination){
+            newResponse = newResponse.filter((flights)=>{
+                return flights.destination.toLowerCase().includes(destination.toLowerCase().trim());
+            })
+            if(newResponse.length<1){
+                return res.status(404).json({
+                    msg: `flight coming from ${destination} does not exist`
+                })
+            }
+        }
         res.status(200).json(newResponse)
     } catch (error) {
         console.error(error)
@@ -82,7 +92,7 @@ const getSingleArrival = async(req,res)=>{
 }
 
 const getSingleDeparture = async(req,res)=>{
-    const {flightNumber,airline,terminal} = req.query;
+    const {flightNumber,airline,gate,destination} = req.query;
 
     try {
         let response = await flightsDepart;
@@ -101,7 +111,7 @@ const getSingleDeparture = async(req,res)=>{
         }
         if(airline){
             newResponse = newResponse.filter((flights)=>{
-                return flights.airline.find((air)=> air.toLowerCase() === airline.toLowerCase().trim());
+                return flights.airline.find((air)=> air.toLowerCase().includes(airline.toLowerCase().trim()));
             })
             if(newResponse.length<1){
                 return res.status(404).json({
@@ -109,13 +119,23 @@ const getSingleDeparture = async(req,res)=>{
                 })
             }
         }
-        if(terminal){
+        if(gate){
             newResponse = newResponse.filter((flights)=>{
-                return flights.terminal === terminal;
+                return flights.gate.toLowerCase().includes(gate.toLowerCase().trim())
             })
             if(newResponse.length<1){
                 return res.status(404).json({
-                    msg: `There is no flight departing from Terminal ${terminal} at this moment`
+                    msg: `There is no flight departing from gate ${gate} at this moment`
+                })
+            }
+        }
+        if(destination){
+            newResponse = newResponse.filter((flights)=>{
+                return flights.destination.toLowerCase().includes(destination.toLowerCase().trim());
+            })
+            if(newResponse.length<1){
+                return res.status(404).json({
+                    msg: `flight going to ${destination} does not exist`
                 })
             }
         }

@@ -80,6 +80,8 @@ body main.departHeading {
   background-color: transparent;
   border: none;
   outline: none;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 }
 .departure #heading .queryForm select.departHeading {
   color: red;
@@ -106,6 +108,10 @@ body main.departHeading {
 .departure #heading .queryForm input.arriveHeading {
   color: green;
   box-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green, 0 0 2px green;
+}
+.departure #heading .queryForm #searchbtn {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 .departure #heading #queryToggle {
   display: flex;
@@ -156,7 +162,7 @@ body main.departHeading {
 .departure table #airline {
   width: 25%;
 }
-.departure table #remark {
+.departure table #remarks {
   text-align: right;
 }
 .departure table #gate {
@@ -186,11 +192,6 @@ body main.departHeading {
     margin: 0;
     padding: 0.5rem;
   }
-  table {
-    width: clamp(20rem, 90%, 60rem);
-    text-align: center;
-    transition: all 300ms;
-  }
 }
 @media screen and (max-width: 420px) {
   #heading {
@@ -198,6 +199,12 @@ body main.departHeading {
   }
   #query {
     width: 40%;
+  }
+  #destination {
+    width: 20%;
+  }
+  #airline {
+    width: 20%;
   }
 }
 @media screen and (max-width: 360px) {

@@ -118,6 +118,8 @@ body{
                 background-color: transparent;
                 border: none;
                 outline: none;
+                border-top-left-radius: 1rem;
+                border-bottom-left-radius: 1rem;
             }
             select.departHeading{
                 @include shadow($color: red);
@@ -146,6 +148,10 @@ body{
             input.arriveHeading{
                 @include shadow($color: green);
                 @include boxshadow($color: green)
+            }
+            #searchbtn{
+                border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;
             }
            
         }
@@ -212,7 +218,7 @@ body{
         #airline{
             width: 25%;
         }
-        #remark{
+        #remarks{
             text-align: right;
         }
         #gate{
@@ -247,12 +253,7 @@ body{
         margin: 0;
         padding: 0.5rem
     }
-    table{
-        width: clamp(20rem,90%,60rem);
-        text-align: center;
-        transition: all 300ms;
-    }
-
+   
 }
 @media screen and (max-width:420px){
     #heading{
@@ -260,6 +261,12 @@ body{
     }
     #query{
         width: 40%;
+    }
+    #destination{
+        width: 20%;
+    }
+    #airline{
+        width: 20%;
     }
    
 }

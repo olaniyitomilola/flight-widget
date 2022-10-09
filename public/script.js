@@ -9,10 +9,25 @@ const arrivalHeading = document.getElementById('arriveHeading')
 const departHeading = document.getElementById('departHeading')
 const tablebody = document.querySelector('tbody')
 const gateHeading = document.querySelector('th#gate')
+const selectOption = document.querySelector('option.g_and_t')
+const querySelection = document.getElementById('queryselection')
+const queryBox = document.getElementById('query');
+const searchbtn = document.getElementById('searchbtn')
 
 arrivalHeading.addEventListener('click',headingToggler)
 departHeading.addEventListener('click',headingToggler)
 queryToggle.addEventListener('click',searchAnihandler)
+searchbtn.addEventListener('click',(e)=>{
+    e.preventDefault
+    if(searchbtn.classList.contains('departHeading')){
+        queriedSearchDepart()
+    }
+    if(searchbtn.classList.contains('arriveHeading')){
+        queriedSearchArrival()
+    }
+})
+
+console.log(querySelection.value)
 
 function headingToggler(){
 
@@ -34,11 +49,15 @@ function headingToggler(){
     tablebody.innerHTML = "";
     if(this.id == 'arriveHeading'){
         gateHeading.textContent = 'Terminal';
-        populateArrival()
+        selectOption.textContent = 'Terminal'
+        selectOption.value = 'terminal'
+        populateArrival('/flights')
     }
     if(this.id == 'departHeading'){
         gateHeading.textContent = 'Gate';
-        populateDeparture()
+        selectOption.textContent = 'Gate'
+        selectOption.value = 'gate'
+        populateDeparture('/flights/departure')
     }
     
    
@@ -67,9 +86,9 @@ function searchAnihandler(){
 }
 
 
-async function populateDeparture (){
+async function populateDeparture (url){
     try {
-        const res = await axios.get('/flights/departure')
+        const res = await axios.get(url)
         res.data.forEach((flight)=>{
             const tr = document.createElement('tr')
             const time = document.createElement('td')
@@ -103,7 +122,7 @@ async function populateDeparture (){
             gate.textContent = flight.gate;
 
             const remark = document.createElement('td')
-            remark.id = 'airline'
+            remark.id = 'remarks'
             remark.textContent = flight.status;
 
             tr.append(time,destination,flightCode,airline,gate,remark)
@@ -114,9 +133,9 @@ async function populateDeparture (){
         console.log(error)
     }
 }
-async function populateArrival (){
+async function populateArrival (url){
     try {
-        const res = await axios.get('/flights')
+        const res = await axios.get(url)
         res.data.forEach((flight)=>{
             const tr = document.createElement('tr')
             const time = document.createElement('td')
@@ -152,7 +171,7 @@ async function populateArrival (){
             gate.textContent = flight.terminal;
 
             const remark = document.createElement('td')
-            remark.id = 'airline'
+            remark.id = 'remarks'
             remark.textContent = flight.status;
 
             tr.append(time,destination,flightCode,airline,gate,remark)
@@ -163,8 +182,21 @@ async function populateArrival (){
         console.log(error)
     }
 }
-async function queredSearch(){
+function queriedSearchDepart(){
+    const name = querySelection.value;
+    const val = queryBox.value.trim();
+    const link = `/flights/departure/search?${name}=${val}`
+    tablebody.innerHTML = ''
+    populateDeparture(link);
+
+}
+function queriedSearchArrival(){
+    const name = querySelection.value;
+    const val = queryBox.value.trim();
+    const link = `/flights/search?${name}=${val}`
+    tablebody.innerHTML = ''
+    populateArrival(link);
 
 }
 
-populateDeparture()
+populateDeparture('/flights/departure')
